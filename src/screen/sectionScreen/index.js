@@ -99,34 +99,36 @@ const VehicleBrandScreen = ({ route: { params: { type, brand, model} } }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Header />
-      <Text style={styles.subtitle}>Selecione {text} do veículo</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <Header />
+        <Text style={styles.subtitle}>Selecione {text} do veículo</Text>
 
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder={`Busque ${text} do veículo`}
-          value={searchText}
-          onChangeText={handleSearch}
-        />
-        {searchText ? (
-          <TouchableOpacity onPress={clearSearch} style={styles.clearButton}>
-            <Text style={styles.clearButtonText}>X</Text>
-          </TouchableOpacity>
-        ) : null}
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder={`Busque ${text} do veículo`}
+            value={searchText}
+            onChangeText={handleSearch}
+          />
+          {searchText ? (
+            <TouchableOpacity onPress={clearSearch} style={styles.clearButton}>
+              <Text style={styles.clearButtonText}>X</Text>
+            </TouchableOpacity>
+          ) : null}
+        </View>
+
+        {filteredList.length > 0 ? (
+          filteredList.map(item => (
+            <TouchableOpacity key={item.codigo} style={styles.resultButton} onPress={() => selectModel(item.codigo)}>
+              <Text style={styles.resultText}>{item.nome}</Text>
+            </TouchableOpacity>
+          ))
+        ) : (
+          <Text>Nada encontrado</Text>
+        )}
       </View>
-
-      {filteredList.length > 0 ? (
-        filteredList.map(item => (
-          <TouchableOpacity key={item.codigo} style={styles.resultButton} onPress={() => selectModel(item.codigo)}>
-            <Text style={styles.resultText}>{item.nome}</Text>
-          </TouchableOpacity>
-        ))
-      ) : (
-        <Text>Nada encontrado</Text>
-      )}
-    </View>
+    </ScrollView>
   );
 };
 
